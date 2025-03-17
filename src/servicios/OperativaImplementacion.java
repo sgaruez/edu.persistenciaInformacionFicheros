@@ -14,8 +14,8 @@ import java.util.List;
 
 public class OperativaImplementacion implements OperativaInterfaz{
 
-    private long idPropietario = Inicio.listaPropietario.getLast().getId();
-    private long idVehiculo = Inicio.listaVehiculo.getLast().getId();
+    private long idPropietario = 0;
+    private long idVehiculo = 0;
 
     @Override
     public void ficheroADto() {
@@ -47,10 +47,23 @@ public class OperativaImplementacion implements OperativaInterfaz{
             Inicio.listaVehiculo.add(nuevoVehiculoDto);
 
             idPropietario = 1 + idPropietario;
-            if (fchMatriculacion.plusYears(25).isBefore(LocalDate.now())) {
+            if (!LocalDate.now().isBefore(fchMatriculacion.plusYears(25))) {
                 esHistorico = true;
             }
             PropietarioDto nuevoPropietarioDto = new PropietarioDto(idPropietario, dni, fchCompra, matricula, esHistorico);
+            Inicio.listaPropietario.add(nuevoPropietarioDto);
+        }
+    }
+
+    @Override
+    public void mostrarDatos() {
+        for (VehiculoDto vehiculo : Inicio.listaVehiculo){
+            System.out.println("---- VEHICULO ----");
+            System.out.println(vehiculo);
+        }
+        for (PropietarioDto propietario :Inicio.listaPropietario){
+            System.out.println("---- PROPIETARIO ----");
+            System.out.println(propietario);
         }
     }
 }

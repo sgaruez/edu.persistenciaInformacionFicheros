@@ -37,6 +37,9 @@ public class Inicio {
             operativa.ficheroADto();
 
             do {
+
+                operativa.mostrarDatos();
+
                 menu.mostrarMenu();
                 opcionUsuario = menu.seleccionarOpcion();
 
