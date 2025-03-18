@@ -6,10 +6,10 @@ public class PropietarioDto {
 
     //Atributos
     private long id = 0;
-    private String dni;
-    private LocalDate fchCompra;
-    private String matricula;
-    private boolean esHistorico;
+    private String dni = "aaaa";
+    private LocalDate fchCompra = LocalDate.MAX;
+    private String matricula = "aaaa";
+    private boolean esHistorico = false;
 
     //Constructor
     public PropietarioDto(long id, String dni, LocalDate fchCompra, String matricula, boolean esHistorico) {

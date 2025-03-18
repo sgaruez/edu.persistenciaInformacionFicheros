@@ -37,9 +37,6 @@ public class Inicio {
             operativa.ficheroADto();
 
             do {
-
-                operativa.mostrarDatos();
-
                 menu.mostrarMenu();
                 opcionUsuario = menu.seleccionarOpcion();
 
@@ -48,7 +45,7 @@ public class Inicio {
                         esCerrado = true;
                         break;
                     case 2:
-                        System.out.println("Opcion 2");
+                        operativa.mostarNHistoricos();
                         break;
                     case 3:
                         System.out.println("Opcion 3");

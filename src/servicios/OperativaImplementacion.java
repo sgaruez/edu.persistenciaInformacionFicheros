@@ -56,6 +56,50 @@ public class OperativaImplementacion implements OperativaInterfaz{
     }
 
     @Override
+    public void mostarNHistoricos() {
+        int nHistoricos = 0;
+        if (!Inicio.listaPropietario.isEmpty()){
+            for (PropietarioDto propietario : Inicio.listaPropietario){
+                if (propietario.isEsHistorico()){
+                    nHistoricos++;
+                }
+            }
+        }
+        System.out.println("N. Historicos:".concat(String.valueOf(nHistoricos)));
+    }
+
+    @Override
+    public void altaNuevoPropietario() {
+        PropietarioDto nuevoPropietarioDto = new PropietarioDto();
+
+        String dni;
+
+
+
+        idPropietario = 1 + idPropietario;
+
+        nuevoPropietarioDto.setId(idPropietario);
+        nuevoPropietarioDto.setDni(dni);
+    }
+
+    private String solicitarDni() {
+        String dni;
+        boolean esCorrecto = false;
+
+        do {
+            System.out.println("Introduzca su DNI: ");
+            dni = Inicio.scanner.next();
+            if (dni.length() == 9){
+                esCorrecto = true;
+            }else {
+                esCorrecto = false;
+            }
+        }while (!esCorrecto);
+
+        return dni;
+    }
+
+    @Override
     public void mostrarDatos() {
         for (VehiculoDto vehiculo : Inicio.listaVehiculo){
             System.out.println("---- VEHICULO ----");
