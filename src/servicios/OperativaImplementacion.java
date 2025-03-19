@@ -30,7 +30,6 @@ public class OperativaImplementacion implements OperativaInterfaz{
             System.err.println("Error al leer el archivo.");
         }
         for (String archivo : registrosArchivo){
-
             if (archivo.equals("matricula:fchMatriculacion:dni:fchCompra")){
                 continue;
             }
