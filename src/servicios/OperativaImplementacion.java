@@ -4,10 +4,13 @@ import controladores.Inicio;
 import dtos.PropietarioDto;
 import dtos.VehiculoDto;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +77,19 @@ public class OperativaImplementacion implements OperativaInterfaz{
 
         String dni;
 
-
-
+        dni = solicitarDni();
         idPropietario = 1 + idPropietario;
 
         nuevoPropietarioDto.setId(idPropietario);
         nuevoPropietarioDto.setDni(dni);
+
+        Inicio.listaPropietario.add(nuevoPropietarioDto);
+
+        for (PropietarioDto propietario : Inicio.listaPropietario){
+            if (propietario.getId() == idPropietario){
+                System.out.println(propietario.toString(true));
+            }
+        }
     }
 
     private String solicitarDni() {
@@ -93,21 +103,47 @@ public class OperativaImplementacion implements OperativaInterfaz{
                 esCorrecto = true;
             }else {
                 esCorrecto = false;
+                System.err.println("DNI erróneo.");
             }
         }while (!esCorrecto);
 
         return dni;
     }
 
+
     @Override
-    public void mostrarDatos() {
-        for (VehiculoDto vehiculo : Inicio.listaVehiculo){
-            System.out.println("---- VEHICULO ----");
-            System.out.println(vehiculo);
-        }
-        for (PropietarioDto propietario :Inicio.listaPropietario){
-            System.out.println("---- PROPIETARIO ----");
-            System.out.println(propietario);
+    public void DtoAFichero() {
+
+        Path rutaArchivo = Paths.get("datosIniciales.txt");
+
+        try (BufferedWriter bw = Files.newBufferedWriter(
+                rutaArchivo,
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING)) {
+            String matricula;
+            String fchMatriculacion = "";
+            String dni;
+            String fchCompra;
+
+            for (PropietarioDto propietario : Inicio.listaPropietario){
+                dni = propietario.getDni();
+                fchCompra = propietario.getFchCompra().format(Inicio.formatoFecha);
+                matricula = propietario.getMatricula();
+                for (VehiculoDto vehiculoDto : Inicio.listaVehiculo){
+                    if (vehiculoDto.getMatricula().equals(matricula)){
+                        fchMatriculacion = vehiculoDto.getFchMatriculacion().format(Inicio.formatoFecha);
+                    } else {
+                        fchMatriculacion = "31-12-9999";
+                    }
+                }
+                String linea = matricula.concat(":").concat(fchMatriculacion).concat(":").concat(dni).concat(":").concat(fchCompra);
+                bw.write(linea);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo.");
         }
     }
+
 }

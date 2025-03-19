@@ -74,4 +74,8 @@ public class PropietarioDto {
                 "\n Es histórico: " + (esHistorico ? "sí" : "no") +
                 "\n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
     }
+
+    public String toString(boolean sobrescrito) {
+        return "Nuevo propietario: " + id + " - " + dni;
+    }
 }

@@ -10,6 +10,7 @@ import servicios.OperativaInterfaz;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
@@ -28,13 +29,12 @@ public class Inicio {
         boolean esCerrado = false;
         byte opcionUsuario;
 
-        try (FileWriter fw = new FileWriter("datosIniciales.txt", true);
-             PrintWriter datosIniciales = new PrintWriter(fw)) {
+        try {
 
             MenuInterfaz menu = new MenuImplementacion();
             OperativaInterfaz operativa = new OperativaImplementacion();
 
-            operativa.ficheroADto();
+            operativa.ficheroADto();1
 
             do {
                 menu.mostrarMenu();
@@ -48,7 +48,7 @@ public class Inicio {
                         operativa.mostarNHistoricos();
                         break;
                     case 3:
-                        System.out.println("Opcion 3");
+                        operativa.altaNuevoPropietario();
                         break;
                     default:
                         System.err.println("La opción elegida no es correcta.");
@@ -58,9 +58,10 @@ public class Inicio {
 
             System.out.println("Cerrando menú.");
             scanner.close();
+            operativa.DtoAFichero();
 
-        } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo de log.");
+        } catch (Exception e){
+            System.err.println("Se ha producido una excepción.");
         }
     }
 
