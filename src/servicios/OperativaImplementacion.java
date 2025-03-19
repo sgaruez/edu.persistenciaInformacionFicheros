@@ -30,6 +30,10 @@ public class OperativaImplementacion implements OperativaInterfaz{
             System.err.println("Error al leer el archivo.");
         }
         for (String archivo : registrosArchivo){
+
+            if (archivo.equals("matricula:fchMatriculacion:dni:fchCompra")){
+                continue;
+            }
             String matricula;
             String dni;
             LocalDate fchMatriculacion;
@@ -125,6 +129,11 @@ public class OperativaImplementacion implements OperativaInterfaz{
             String fchMatriculacion = "";
             String dni;
             String fchCompra;
+            String linea;
+
+            linea = "matricula:fchMatriculacion:dni:fchCompra";
+            bw.write(linea);
+            bw.newLine();
 
             for (PropietarioDto propietario : Inicio.listaPropietario){
                 dni = propietario.getDni();
@@ -133,11 +142,10 @@ public class OperativaImplementacion implements OperativaInterfaz{
                 for (VehiculoDto vehiculoDto : Inicio.listaVehiculo){
                     if (vehiculoDto.getMatricula().equals(matricula)){
                         fchMatriculacion = vehiculoDto.getFchMatriculacion().format(Inicio.formatoFecha);
-                    } else {
-                        fchMatriculacion = "31-12-9999";
+                        break;
                     }
                 }
-                String linea = matricula.concat(":").concat(fchMatriculacion).concat(":").concat(dni).concat(":").concat(fchCompra);
+                linea = matricula.concat(":").concat(fchMatriculacion).concat(":").concat(dni).concat(":").concat(fchCompra);
                 bw.write(linea);
                 bw.newLine();
             }

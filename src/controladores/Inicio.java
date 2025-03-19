@@ -62,6 +62,7 @@ public class Inicio {
 
         } catch (Exception e){
             System.err.println("Se ha producido una excepción.");
+            e.printStackTrace();
         }
     }
 
